@@ -30,10 +30,10 @@ def after_request(response):
     return response
 
 
-@app.route('/api/v1/on-convid-19', methods=['POST'], endpoint='estimator')
-@app.route('/api/v1/on-convid-19/json', methods=['POST'], endpoint="estimator")
+@app.route('/api/v1/on-covid-19', methods=['POST'], endpoint='estimator')
+@app.route('/api/v1/on-covid-19/json', methods=['POST'], endpoint="estimator")
 def estimate_effects():
-    """Estimates the effect of CONVID-19 based on the data passed."""
+    """Estimates the effect of COVID-19 based on the data passed."""
     if not request.json:
         return jsonify({"data": request.get_json(), "impact": {}, "severImpact": {}, "errors": {"general": "Json data required"}}), 400
 
@@ -46,9 +46,9 @@ def estimate_effects():
     return Response(response=json.dumps(estimator(data)), status=200, content_type='application/json')
 
 
-@app.route('/api/v1/on-convid-19/xml', methods=['POST'], endpoint='estimator_xml')
+@app.route('/api/v1/on-covid-19/xml', methods=['POST'], endpoint='estimator_xml')
 def estimate_effects_xml():
-    """Estimates the effects of CONVID-19 and returns data in XML format."""
+    """Estimates the effects of COVID-19 and returns data in XML format."""
     if not request.json:
         return jsonify({"data": request.get_json(), "impact": {}, "severImpact": {},
                         "errors": {"general": "Json data required"}}), 400
@@ -63,7 +63,7 @@ def estimate_effects_xml():
     return Response(response=xml, status=200, mimetype='text/xml')
 
 
-@app.route('/api/v1/on-convid-19/logs', methods=['GET'], endpoint='logs')
+@app.route('/api/v1/on-covid-19/logs', methods=['GET'], endpoint='logs')
 def extract_logs():
     file = os.path.join(os.path.dirname(__file__), 'src/access.log')
     data = ""
