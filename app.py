@@ -30,6 +30,11 @@ def after_request(response):
     return response
 
 
+@app.route('/', methods=['GET'])
+def index():
+    return "<h2>Deployment Succeeded</h2>"
+
+
 @app.route('/api/v1/on-covid-19', methods=['POST'], endpoint='estimator')
 @app.route('/api/v1/on-covid-19/json', methods=['POST'], endpoint="estimator")
 def estimate_effects():
@@ -74,4 +79,4 @@ def extract_logs():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
