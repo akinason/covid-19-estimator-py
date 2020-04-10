@@ -31,9 +31,15 @@ def estimator(data):
     severe_impact["casesForVentilatorsByRequestedTime"] = severe_impact["infectionsByRequestedTime"] * 0.02
 
     duration = _compute_duration_in_days(period_type, time_to_elapse)
-    impact["dollarsInFlight"] = impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD") * duration
-    severe_impact["dollarsInFlight"] = severe_impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD") * duration
+    impact["dollarsInFlight"] =(impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD")) / duration
+    severe_impact["dollarsInFlight"] = (severe_impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD")) / duration
+    for key, value in severe_impact.items():
+        if type(value) == float:
+            severe_impact[key] = int("%.0f" % severe_impact[key])
 
+    for key, value in impact.items():
+        if type(value) == float:
+            impact[key] = int("%.0f" % impact[key])
     return {"data": data, "impact": impact, "severeImpact": severe_impact}
 
 
