@@ -6,6 +6,7 @@ import time
 from flask import Flask, request, jsonify, Response, g
 
 from dicttoxml import dicttoxml
+from flask_cors import CORS
 from marshmallow import ValidationError
 
 from src.estimator import estimator
@@ -14,6 +15,7 @@ from src.serializer import DataSerializer
 
 
 app = Flask(__name__)
+CORS(app)
 app.logger.addHandler(__file_handler)
 app.logger.setLevel(logging.INFO)
 
