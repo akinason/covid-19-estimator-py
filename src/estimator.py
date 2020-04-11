@@ -19,8 +19,8 @@ def estimator(data):
     severe_impact["infectionsByRequestedTime"] = float(severe_currently_infected * multiplier)
 
     # Challenge 2
-    impact["severeCasesByRequestedTime"] = impact["infectionsByRequestedTime"] * 0.15
-    severe_impact["severeCasesByRequestedTime"] = severe_impact["infectionsByRequestedTime"] * 0.15
+    impact["severeCasesByRequestedTime"] = float("%.f" % (impact["infectionsByRequestedTime"] * 0.15))
+    severe_impact["severeCasesByRequestedTime"] = float("%.f" % (severe_impact["infectionsByRequestedTime"] * 0.15))
 
     available_hospital_beds = float("%.f" % (total_hospital_beds * 0.35))
     impact["hospitalBedsByRequestedTime"] = float("%.0f" % (available_hospital_beds - impact["severeCasesByRequestedTime"]))
