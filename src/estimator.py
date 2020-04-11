@@ -22,7 +22,7 @@ def estimator(data):
     impact["severeCasesByRequestedTime"] = impact["infectionsByRequestedTime"] * 0.15
     severe_impact["severeCasesByRequestedTime"] = severe_impact["infectionsByRequestedTime"] * 0.15
 
-    available_hospital_beds = total_hospital_beds * 0.35
+    available_hospital_beds = float("%.f" % (total_hospital_beds * 0.35))
     impact["hospitalBedsByRequestedTime"] = float("%.0f" % (available_hospital_beds - impact["severeCasesByRequestedTime"]))
     severe_impact["hospitalBedsByRequestedTime"] = float("%.0f" % (available_hospital_beds - severe_impact["severeCasesByRequestedTime"]))
 
