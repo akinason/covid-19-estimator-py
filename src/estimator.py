@@ -8,6 +8,7 @@ def estimator(data):
     population = data.get("population")
     total_hospital_beds = data.get('totalHospitalBeds')
 
+    # challenge 1
     currently_infected = reported_cases * 10
     severe_currently_infected = reported_cases * 50
     impact["currentlyInfected"] = float(currently_infected)
@@ -17,13 +18,15 @@ def estimator(data):
     impact["infectionsByRequestedTime"] = float(currently_infected * multiplier)
     severe_impact["infectionsByRequestedTime"] = float(severe_currently_infected * multiplier)
 
-    impact["severeCasesByRequestedTime"] = float("%.0f" % (impact["infectionsByRequestedTime"] * 0.15))
-    severe_impact["severeCasesByRequestedTime"] = float("%.0f" % (severe_impact["infectionsByRequestedTime"] * 0.15))
+    # Challenge 2
+    impact["severeCasesByRequestedTime"] = impact["infectionsByRequestedTime"] * 0.15
+    severe_impact["severeCasesByRequestedTime"] = severe_impact["infectionsByRequestedTime"] * 0.15
 
     available_hospital_beds = total_hospital_beds * 0.35
     impact["hospitalBedsByRequestedTime"] = float("%.0f" % (available_hospital_beds - impact["severeCasesByRequestedTime"]))
     severe_impact["hospitalBedsByRequestedTime"] = float("%.0f" % (available_hospital_beds - severe_impact["severeCasesByRequestedTime"]))
 
+    # Challenge 3
     impact["casesForICUByRequestedTime"] = float("%.0f" % (impact["infectionsByRequestedTime"] * 0.05))
     severe_impact["casesForICUByRequestedTime"] = float("%.0f" % (severe_impact["infectionsByRequestedTime"] * 0.05))
 
@@ -57,4 +60,4 @@ def _compute_duration_in_days(period_type, time_to_elapse):
         duration = time_to_elapse * 7
     elif period_type == "months":
         duration = time_to_elapse * 30
-    return duration
+    return float("%.f" % duration)
