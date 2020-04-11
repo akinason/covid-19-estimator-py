@@ -19,36 +19,36 @@ def estimator(data):
     severe_impact["infectionsByRequestedTime"] = float(severe_currently_infected * multiplier)
 
     # Challenge 2
-    impact["severeCasesByRequestedTime"] = float("%.f" % (impact["infectionsByRequestedTime"] * 0.15))
-    severe_impact["severeCasesByRequestedTime"] = float("%.f" % (severe_impact["infectionsByRequestedTime"] * 0.15))
+    impact["severeCasesByRequestedTime"] = float("%.0d" % (impact["infectionsByRequestedTime"] * 0.15))
+    severe_impact["severeCasesByRequestedTime"] = float("%.0d" % (severe_impact["infectionsByRequestedTime"] * 0.15))
 
-    available_hospital_beds = float("%.f" % (total_hospital_beds * 0.35))
-    impact["hospitalBedsByRequestedTime"] = float("%.0f" % (available_hospital_beds - impact["severeCasesByRequestedTime"]))
-    severe_impact["hospitalBedsByRequestedTime"] = float("%.0f" % (available_hospital_beds - severe_impact["severeCasesByRequestedTime"]))
+    available_hospital_beds = float("%.0d" % (total_hospital_beds * 0.35))
+    impact["hospitalBedsByRequestedTime"] = float("%.0d" % (available_hospital_beds - impact["severeCasesByRequestedTime"]))
+    severe_impact["hospitalBedsByRequestedTime"] = float("%.0d" % (available_hospital_beds - severe_impact["severeCasesByRequestedTime"]))
 
     # Challenge 3
-    impact["casesForICUByRequestedTime"] = float("%.0f" % (impact["infectionsByRequestedTime"] * 0.05))
-    severe_impact["casesForICUByRequestedTime"] = float("%.0f" % (severe_impact["infectionsByRequestedTime"] * 0.05))
+    impact["casesForICUByRequestedTime"] = float("%.0d" % (impact["infectionsByRequestedTime"] * 0.05))
+    severe_impact["casesForICUByRequestedTime"] = float("%.0d" % (severe_impact["infectionsByRequestedTime"] * 0.05))
 
-    impact["casesForVentilatorsByRequestedTime"] = float("%.0f" % (impact["infectionsByRequestedTime"] * 0.02))
-    severe_impact["casesForVentilatorsByRequestedTime"] = float("%.0f" % (severe_impact["infectionsByRequestedTime"] * 0.02))
+    impact["casesForVentilatorsByRequestedTime"] = float("%.0d" % (impact["infectionsByRequestedTime"] * 0.02))
+    severe_impact["casesForVentilatorsByRequestedTime"] = float("%.0d" % (severe_impact["infectionsByRequestedTime"] * 0.02))
 
     duration = _compute_duration_in_days(period_type, time_to_elapse)
-    impact["dollarsInFlight"] =(impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD")) / duration
+    impact["dollarsInFlight"] = (impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD")) / duration
     severe_impact["dollarsInFlight"] = (severe_impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD")) / duration
     for key, value in severe_impact.items():
         if type(value) == float:
-            severe_impact[key] = int("%.0f" % severe_impact[key])
+            severe_impact[key] = int("%.0d" % severe_impact[key])
 
     for key, value in impact.items():
         if type(value) == float:
-            impact[key] = int("%.0f" % impact[key])
+            impact[key] = int("%.0d" % impact[key])
     return {"data": data, "impact": impact, "severeImpact": severe_impact}
 
 
 def _compute_multiplier(period_type, time_to_elapse):
     duration = _compute_duration_in_days(period_type, time_to_elapse)
-    factor = float("%d" % (duration / 3))
+    factor = float("%.0d" % (duration / 3))
     return 2 ** factor
 
 
@@ -60,4 +60,4 @@ def _compute_duration_in_days(period_type, time_to_elapse):
         duration = time_to_elapse * 7
     elif period_type == "months":
         duration = time_to_elapse * 30
-    return float("%.f" % duration)
+    return float("%.0d" % duration)
