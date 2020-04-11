@@ -66,7 +66,7 @@ def estimate_effects_xml():
     except ValidationError as err:
         return jsonify({"data": request.get_json(), "impact": {}, "severImpact": {}, "errors": err.messages}), 400
 
-    xml = dicttoxml(data)
+    xml = dicttoxml(estimator(data))
     return Response(response=xml, status=200, mimetype='text/xml')
 
 
