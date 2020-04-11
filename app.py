@@ -67,7 +67,7 @@ def estimate_effects_xml():
         return jsonify({"data": request.get_json(), "impact": {}, "severImpact": {}, "errors": err.messages}), 400
 
     xml = dicttoxml(estimator(data))
-    return Response(response=xml, status=200, mimetype='text/xml')
+    return Response(response=xml, status=200, mimetype='application/xml')
 
 
 @app.route('/api/v1/on-covid-19/logs', methods=['GET', 'POST'], endpoint='logs')
