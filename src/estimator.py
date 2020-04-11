@@ -4,9 +4,9 @@ def estimator(data):
     region = data.get('region')
     period_type = data.get('periodType')
     time_to_elapse = data.get("timeToElapse")
-    reported_cases = data.get("reportedCases")
+    reported_cases = float(data.get("reportedCases"))
     population = data.get("population")
-    total_hospital_beds = data.get('totalHospitalBeds')
+    total_hospital_beds = float(data.get('totalHospitalBeds'))
 
     # challenge 1
     currently_infected = reported_cases * 10
@@ -19,19 +19,19 @@ def estimator(data):
     severe_impact["infectionsByRequestedTime"] = float(severe_currently_infected * multiplier)
 
     # Challenge 2
-    impact["severeCasesByRequestedTime"] = float("%.0d" % (impact["infectionsByRequestedTime"] * 0.15))
-    severe_impact["severeCasesByRequestedTime"] = float("%.0d" % (severe_impact["infectionsByRequestedTime"] * 0.15))
+    impact["severeCasesByRequestedTime"] = impact["infectionsByRequestedTime"] * 0.15
+    severe_impact["severeCasesByRequestedTime"] = severe_impact["infectionsByRequestedTime"] * 0.15
 
-    available_hospital_beds = float("%.0d" % (total_hospital_beds * 0.35))
-    impact["hospitalBedsByRequestedTime"] = float("%.0d" % (available_hospital_beds - impact["severeCasesByRequestedTime"]))
-    severe_impact["hospitalBedsByRequestedTime"] = float("%.0d" % (available_hospital_beds - severe_impact["severeCasesByRequestedTime"]))
+    available_hospital_beds = total_hospital_beds * 0.35
+    impact["hospitalBedsByRequestedTime"] = available_hospital_beds - impact["severeCasesByRequestedTime"]
+    severe_impact["hospitalBedsByRequestedTime"] = available_hospital_beds - severe_impact["severeCasesByRequestedTime"]
 
     # Challenge 3
-    impact["casesForICUByRequestedTime"] = float("%.0d" % (impact["infectionsByRequestedTime"] * 0.05))
-    severe_impact["casesForICUByRequestedTime"] = float("%.0d" % (severe_impact["infectionsByRequestedTime"] * 0.05))
+    impact["casesForICUByRequestedTime"] = impact["infectionsByRequestedTime"] * 0.05
+    severe_impact["casesForICUByRequestedTime"] = severe_impact["infectionsByRequestedTime"] * 0.05
 
-    impact["casesForVentilatorsByRequestedTime"] = float("%.0d" % (impact["infectionsByRequestedTime"] * 0.02))
-    severe_impact["casesForVentilatorsByRequestedTime"] = float("%.0d" % (severe_impact["infectionsByRequestedTime"] * 0.02))
+    impact["casesForVentilatorsByRequestedTime"] = impact["infectionsByRequestedTime"] * 0.02
+    severe_impact["casesForVentilatorsByRequestedTime"] = severe_impact["infectionsByRequestedTime"] * 0.02
 
     duration = _compute_duration_in_days(period_type, time_to_elapse)
     impact["dollarsInFlight"] = (impact["infectionsByRequestedTime"] * region.get("avgDailyIncomePopulation") * region.get("avgDailyIncomeInUSD")) / duration
